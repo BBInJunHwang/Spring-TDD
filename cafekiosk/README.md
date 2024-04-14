@@ -123,14 +123,6 @@
 - 추출한 private 메소드는 순서대로 정리
 
 # Basic 06
-## Presentation layer
-- 외부세계 요청을 가장 먼저 받는 계층
-- 파라미터 최소한 검증 수행
-
-## Mock
-- MockMvc : 가짜 객체를 사용해 스프링 MVC 동작을 재현
-
-
 ## @Transaction (readOnly = true)
 - 읽기 전용, create/update/delete  동작 안함
 - JPA에서 이점 : 1차캐시 스냅샷 저장시 트랜잭션 flush 시점에 변경감지 (update 쿼리 수행)
@@ -140,4 +132,13 @@
 - 이때 Command / Read 분리 시 서로 연관 없도록 만든다. 부하에 따라 서로 영향 없음
 - 예시) master db 는 command, slave db는 Read만 사용
 - 서비스 상단에 readOnly=true를 걸고, 메소드 단위로 @Transaction 건다.
-- 
+
+## Presentation layer
+- 외부세계 요청을 가장 먼저 받는 계층
+- 파라미터 최소한 검증 수행
+
+## Mock
+- MockMvc : 가짜 객체를 사용해 스프링 MVC 동작을 재현
+- 컨트롤러 관련 빈만 띄우는 어노테이션
+
+- MockBean : 컨트롤러 테스트시 서비스 클래스는 안띄우기 때문에 MockBean 처리를 해준다.

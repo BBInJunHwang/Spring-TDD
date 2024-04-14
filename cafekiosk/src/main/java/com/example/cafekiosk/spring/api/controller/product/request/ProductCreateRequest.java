@@ -5,8 +5,10 @@ import com.example.cafekiosk.spring.domain.product.ProductSellingStatus;
 import com.example.cafekiosk.spring.domain.product.ProductType;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor // http body 역직렬화 할때 objectMapper가 기본 생성자를 사용, Post 요청시 필요
 public class ProductCreateRequest {
 
     private ProductType type;
