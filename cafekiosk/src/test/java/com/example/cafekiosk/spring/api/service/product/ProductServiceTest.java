@@ -7,6 +7,7 @@ import com.example.cafekiosk.spring.domain.product.ProductRepository;
 import com.example.cafekiosk.spring.domain.product.ProductSellingStatus;
 import com.example.cafekiosk.spring.domain.product.ProductType;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,14 @@ class ProductServiceTest {
         Assertions.assertThat(productResponse)
                 .extracting("productNumber", "type","sellingStatus", "name", "price")
                 .contains("002", ProductType.HANDMADE, ProductSellingStatus.SELLING, "카푸치노", 5000);
+
+        List<Product> products = productRepository.findAll();
+        Assertions.assertThat(products).hasSize(2)
+                .extracting("productNumber", "type","sellingStatus", "name", "price")
+                .containsExactlyInAnyOrder(
+                        Tuple.tuple("001", ProductType.HANDMADE, ProductSellingStatus.SELLING, "아메리카노", 4000),
+                        Tuple.tuple("002", ProductType.HANDMADE, ProductSellingStatus.SELLING, "카푸치노", 5000)
+                        );
     }
 
 
@@ -71,6 +80,12 @@ class ProductServiceTest {
         Assertions.assertThat(productResponse)
                 .extracting("productNumber", "type","sellingStatus", "name", "price")
                 .contains("001", ProductType.HANDMADE, ProductSellingStatus.SELLING, "카푸치노", 5000);
+
+        List<Product> products = productRepository.findAll();
+        Assertions.assertThat(products).hasSize(1)
+                .extracting("productNumber", "type","sellingStatus", "name", "price")
+                .containsExactlyInAnyOrder(
+                        Tuple.tuple("001", ProductType.HANDMADE, ProductSellingStatus.SELLING, "카푸치노", 5000));
     }
     @Test
     void getSellingProducts() {
