@@ -121,3 +121,12 @@
 - 리팩토링 단계에서 응용서비스 내 복잡한 비즈니스 존재시 정리 필요
 - stream, filter, map 등 데이터 가공 로직은 private 메소드로 분리
 - 추출한 private 메소드는 순서대로 정리
+
+# Basic 06
+## Presentation layer
+- 외부세계 요청을 가장 먼저 받는 계층
+- 파라미터 최소한 검증 수행
+
+## Mock
+- MockMvc : 가짜 객체를 사용해 스프링 MVC 동작을 재현
+- 
