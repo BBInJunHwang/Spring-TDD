@@ -104,3 +104,14 @@
 - Persistence Layer 와 상호작용 (Data CRUD 행위) 통해 비즈니스 로직 전개
 - 트랜잭션 보장해야한다.
 - Business Layer + Persistence Layer 두개 테스트 통합 테스트 느낌으로 진행
+
+
+# Basic 05
+## 테스트 시 @Transactional vs TearDown()
+- 테스트 코드에 @Transactional 가 존재 시 실제 서비스 레이어에 트랜잭션 유무를 알 수 없다.
+- -> 뒤늦게 알 수 있다.
+- -> 그러나 insert/update 에서 사용하는건 상식이다.
+
+- TearDown 사용하면 실제 환경과 동일하게 테스트 할 수 있다.
+- -> 그러나 매 테스트 코드에 작성 해줘야 한다.
+- 두개의 차이는 논쟁이 있는 부분이다.
