@@ -129,4 +129,15 @@
 
 ## Mock
 - MockMvc : 가짜 객체를 사용해 스프링 MVC 동작을 재현
+
+
+## @Transaction (readOnly = true)
+- 읽기 전용, create/update/delete  동작 안함
+- JPA에서 이점 : 1차캐시 스냅샷 저장시 트랜잭션 flush 시점에 변경감지 (update 쿼리 수행)
+- readOnly = true 시 CUD 동작을 하지 않기 때문에 성능 향상
+- CQRS - Command / Read 분리 
+- 대부분 서비스는 압도적으로 Read가 많다.
+- 이때 Command / Read 분리 시 서로 연관 없도록 만든다. 부하에 따라 서로 영향 없음
+- 예시) master db 는 command, slave db는 Read만 사용
+- 서비스 상단에 readOnly=true를 걸고, 메소드 단위로 @Transaction 건다.
 - 
