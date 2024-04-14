@@ -159,6 +159,31 @@ class OrderServiceTest {
                 );
     }
 
+    @DisplayName("재고가 부족한 상품으로 주문을 생성하려는 경우 예외가 발생한다.")
+    @Test
+    void createOrderWithNoStock() {
+        // given
+        LocalDateTime registeredDateTime = LocalDateTime.now();
+        Product product1 = createProduct(ProductType.BOTTLE, "001", 1000);
+        Product product2 = createProduct(ProductType.BAKERY, "002", 3000);
+        Product product3 = createProduct(ProductType.HANDMADE, "003", 5000);
+
+        productRepository.saveAll(List.of(product1, product2, product3));
+
+        Stock stock1 = Stock.create("001", 1);
+        Stock stock2 = Stock.create("002", 1);
+        stockRepository.saveAll(List.of(stock1, stock2));
+
+        OrderCreateRequest request = OrderCreateRequest.builder()
+                .productNumbers(List.of("001", "001", "002", "003"))
+                .build();
+        // when / then
+        Assertions.assertThatThrownBy(() -> orderService.createOrder(request, registeredDateTime))
+                .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("재고가 부족한 상품이 있습니다.");
+
+    }
+
     private Product createProduct(ProductType type, String productNumber, int price) {
         return Product.builder()
                 .type(type)
