@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
-//@Transactional
+@Transactional
 class OrderServiceTest {
 
     @Autowired
@@ -46,14 +46,14 @@ class OrderServiceTest {
     private OrderProductRepository orderProductRepository;
 
     // clear 해줘야함 매 테스트 마다
-    @AfterEach
-    void tearDown(){
-        //productRepository.deleteAll();
-        orderProductRepository.deleteAllInBatch();
-        productRepository.deleteAllInBatch();
-        orderRepository.deleteAllInBatch();
-        stockRepository.deleteAllInBatch();
-    }
+//    @AfterEach
+//    void tearDown(){
+//        //productRepository.deleteAll();
+//        orderProductRepository.deleteAllInBatch();
+//        productRepository.deleteAllInBatch();
+//        orderRepository.deleteAllInBatch();
+//        stockRepository.deleteAllInBatch();
+//    }
 
 
     @DisplayName("주문번호 리스틀르 받아 주문을 생성한다.")
