@@ -2,6 +2,7 @@ package com.example.cafekiosk.spring.api.service.product;
 
 import com.example.cafekiosk.spring.api.controller.product.request.ProductCreateRequest;
 import com.example.cafekiosk.spring.api.service.product.reponse.ProductResponse;
+import com.example.cafekiosk.spring.api.service.product.request.ProductCreateServiceRequest;
 import com.example.cafekiosk.spring.domain.product.Product;
 import com.example.cafekiosk.spring.domain.product.ProductRepository;
 import com.example.cafekiosk.spring.domain.product.ProductSellingStatus;
@@ -22,7 +23,7 @@ public class ProductService {
 
 
     @Transactional
-    public ProductResponse createProduct(ProductCreateRequest request) {
+    public ProductResponse createProduct(ProductCreateServiceRequest request) {
         String nextProductNumber = createNextProductNumber();
 
         Product product = request.toEntity(nextProductNumber);
