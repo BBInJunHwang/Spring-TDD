@@ -2,6 +2,7 @@ package com.example.cafekiosk.spring.api.controller.product;
 
 import com.example.cafekiosk.spring.api.controller.product.request.ProductCreateRequest;
 import com.example.cafekiosk.spring.api.service.product.ProductService;
+import com.example.cafekiosk.spring.api.service.product.reponse.ProductResponse;
 import com.example.cafekiosk.spring.domain.product.ProductSellingStatus;
 import com.example.cafekiosk.spring.domain.product.ProductType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +17,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @WebMvcTest(controllers = ProductController.class)
@@ -142,6 +146,27 @@ class ProductControllerTest {
                 .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.message").value("상품 가격은 양수여야 합니다."))
                 .andExpect(jsonPath("$.data").isEmpty()
+                );
+    }
+
+    @DisplayName("판매 상품을 조회한다.")
+    @Test
+    void getSellingProduct() throws Exception {
+        // given
+        // 이미 서비스 레이어에서 List가 잘 오는걸 검증했으니, 빈 리스트에 리스트형태로 잘 오는지만 검증해도 충분하다.
+        List<ProductResponse> result = List.of();
+        when(productService.getSellingProducts()).thenReturn(result);
+
+        // when / then
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/products/selling")
+                        //.queryParam("parameterName", "value") // get방식 파라미터 검사시
+                )
+                .andDo(MockMvcResultHandlers.print()) // 좀더 상세히 로그 조회 가능
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("$.code").value("200"))
+                .andExpect(jsonPath("$.status").value("OK"))
+                .andExpect(jsonPath("$.message").value("OK"))
+                .andExpect(jsonPath("$.data").isArray()
                 );
     }
 }
